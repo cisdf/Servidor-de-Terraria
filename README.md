@@ -25,7 +25,3 @@ Este repositorio contiene un script para configurar y ejecutar un servidor de Te
 ## 📌 Notas  
 - Este proyecto está en desarrollo, cualquier contribución es bienvenida.  
 - Si encuentras algún problema, abre un issue.  
-
----  
-
-Si quieres agregar algo más, dime y lo ajustamos.
