@@ -1,6 +1,6 @@
 # Servidor de Terraria en Codespaces  
 
-Este repositorio contiene un script para configurar y ejecutar un servidor de Terraria en **GitHub Codespaces**, utilizando **Serveo** para exponerlo públicamente.  
+Este repositorio contiene un script para configurar y ejecutar un servidor de Terraria en **GitHub Codespaces**.  
 
 ## 🚀 Características  
 - Configuración automática del servidor en Codespaces.  
