@@ -4,7 +4,7 @@ Este repositorio contiene un script para configurar y ejecutar un servidor de Te
 
 ## 🚀 Características  
 - Configuración automática del servidor en Codespaces.  
-- Uso de Serveo para crear un túnel y permitir conexiones externas.  
+- Uso de ngrok y playit.gg para crear un túnel y permitir conexiones externas.  
 - Gestión sencilla a través de `setup_terraria.py`.  
 
 ## 📜 Requisitos  
