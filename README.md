@@ -9,7 +9,6 @@ Este repositorio contiene un script para configurar y ejecutar un servidor de Te
 
 ## 📜 Requisitos  
 - Una cuenta de GitHub con acceso a Codespaces.  
-- Claves SSH configuradas para usar Serveo.  
 
 ## 🔧 Instalación y Uso  
 
