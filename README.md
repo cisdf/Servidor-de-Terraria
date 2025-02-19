@@ -18,7 +18,6 @@ Este repositorio contiene un script para configurar y ejecutar un servidor de Te
 1. **Descarga los archivos del repositorio:**
    - `setup_terraria.py`
    - `instalar_playit.py`
-   - El archivo de configuración `terraria_config.json` se generará automáticamente o se actualizará durante la ejecución.
 
 2. **Ejecuta el script:**
    ```bash
