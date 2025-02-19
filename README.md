@@ -1,6 +1,6 @@
 # Servidor de Terraria en Codespaces
 
-Este repositorio automatiza la configuración y ejecución de un servidor de Terraria utilizando **GitHub Codespaces**. La automatización se logra a través de un script en Python que se encarga de:
+Este repositorio contiene un script para configurar y ejecutar un servidor de Terraria en GitHub Codespaces.
 
 - **Descargar e instalar** el servidor de Terraria y herramientas complementarias.
 - **Configurar el entorno**, creando directorios, enlaces simbólicos y asignando los permisos necesarios.
