@@ -20,7 +20,7 @@ Este repositorio contiene un script para configurar y ejecutar un servidor de Te
    ```bash
    python setup_terraria.py
    ```  
-3. **Conéctate al servidor desde Terraria** usando la dirección proporcionada por Serveo.  
+3. **Conéctate al servidor desde Terraria** usando la dirección proporcionada por ngrok o playit.gg.  
 
 ## 📌 Notas  
 - Este proyecto está en desarrollo, cualquier contribución es bienvenida.  
