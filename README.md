@@ -2,11 +2,6 @@
 
 Este repositorio contiene un script para configurar y ejecutar un servidor de Terraria en GitHub Codespaces.
 
-- **Descargar e instalar** el servidor de Terraria y herramientas complementarias.
-- **Configurar el entorno**, creando directorios, enlaces simbólicos y asignando los permisos necesarios.
-- **Gestionar túneles de conexión externa** con ngrok o Playit para facilitar el acceso remoto.
-- **Monitorear el servidor** y, opcionalmente, notificar el estado a través de un webhook de Discord.
-
 ---
 
 ## 📜 Requisitos
