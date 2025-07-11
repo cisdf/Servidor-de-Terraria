@@ -3,8 +3,6 @@
 
 > ✨ **Proyecto mantenido por [Bryan GR](https://github.com/cisdf) | [☕ Invítame un café](https://ko-fi.com/brayangr)**  
 
-![Banner Terraria](https://via.placeholder.com/800x200.png?text=Terraria+Server+in+Codespaces) *(Recomiendo agregar imagen real aquí)*  
-
 ---
 
 ## 🔥 ¿Por qué usar esta solución?  
@@ -49,43 +47,15 @@
 ---
 
 ## 🚧 Roadmap (Próximas Features)  
-- [ ] Panel web de administración  
 - [ ] Soporte para mods (tModLoader)  
 - [ ] Métricas de rendimiento en tiempo real  
 - [ ] Sistema de whitelist automático  
 
 ---
 
-## ❓ Preguntas Frecuentes  
-
-### ¿Puedo usar esto para otros juegos?  
-¡Sí! El sistema es adaptable a:  
-- Minecraft  
-- Starbound  
-- 7 Days to Die  
+## ❓ Preguntas Frecuentes    
 
 ### ¿Es gratis?  
 ✅ **Totalmente gratis** - Pero si te gusta el proyecto:  
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/brayangr)  
 
----
-
-## 📜 Licencia  
-MIT License - Usa, modifica y comparte libremente  
-
-**¿Problemas?** [Abre un issue](https://github.com/cisdf/terraria-codespaces/issues)  
-**¿Mejorías?** ¡Envía un PR!  
-
----
-
-### 💡 Bonus para Ko-fi:  
-**Añade esta sección en tu página de donaciones:**  
-
-> "¿Quieres un servidor **personalizado** con mods específicos?  
-> Por **$10** configuro uno a tu medida con:  
-> - Modpack seleccionado  
-> - Panel de control personal  
-> - Backup en Google Drive  
-> [Solicítalo aquí](mailto:tu@email.com)"  
-
-*(Esto puede generar ingresos adicionales personalizando servidores para donadores)*  
