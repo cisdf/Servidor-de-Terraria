@@ -92,6 +92,7 @@ def setup_directories() -> None:
     try:
         WORLDS_FOLDER.mkdir(exist_ok=True, parents=True)
         (TERRARIA_FOLDER / "logs").mkdir(parents=True, exist_ok=True)
+        DEFAULT_TERRARIA_WORLDS.parent.mkdir(exist_ok=True, parents=True)
         logger.info("Directorios configurados correctamente")
     except OSError as e:
         logger.error(f"Error creando directorios: {e}")
@@ -100,6 +101,10 @@ def setup_directories() -> None:
 def create_symlink() -> None:
     """Crea enlace simbólico para mundos con validación."""
     try:
+        # Asegurarse de que los directorios existen
+        WORLDS_FOLDER.mkdir(exist_ok=True, parents=True)
+        DEFAULT_TERRARIA_WORLDS.parent.mkdir(exist_ok=True, parents=True)
+        
         current_link = None
         if DEFAULT_TERRARIA_WORLDS.exists():
             if DEFAULT_TERRARIA_WORLDS.is_symlink():
@@ -234,7 +239,8 @@ def setup_ngrok(config: Dict[str, Any]) -> subprocess.Popen:
         line = ngrok_process.stdout.readline()
         if "started tunnel" in line and "url=tcp://" in line:
             tunnel_url = line.split("url=tcp://")[1].strip()
-            logger.info(f"Túnel Ngrok establecido: {tunnel_url}")
+            logger.info(f"Túnel Ngrok establecido: tcp://{tunnel_url}")
+            print(f"\n[INFO] ¡Servidor listo! Conéctate usando: tcp://{tunnel_url}\n")
             break
             
     if not tunnel_url:
@@ -244,7 +250,7 @@ def setup_ngrok(config: Dict[str, Any]) -> subprocess.Popen:
     send_to_discord(config.get('discord_webhook'), tunnel_url)
     return ngrok_process
 
-def setup_playit() -> None:
+def setup_playit() -> subprocess.Popen:
     """Configura Playit con verificación de estado."""
     if not is_playit_installed():
         logger.info("Instalando Playit...")
@@ -256,12 +262,17 @@ def setup_playit() -> None:
 
     logger.info("Iniciando Playit...")
     try:
-        run_command_async("playit")
+        process = run_command_async("playit")
         time.sleep(2)  # Esperar inicialización
         
         # Verificar que Playit está corriendo
         if not any("playit" in p.name() for p in psutil.process_iter(['name'])):
             raise ServerError("Playit no se inició correctamente")
+            
+        print("\n[INFO] Playit iniciado correctamente.")
+        print("[INFO] Ejecuta 'playit show' en otra terminal para ver la dirección de conexión.")
+        print("[INFO] La dirección también aparecerá automáticamente en unos segundos.\n")
+        return process
             
     except Exception as e:
         logger.error(f"Error iniciando Playit: {e}")
@@ -397,7 +408,9 @@ def main() -> None:
             processes.append(ngrok_proc)
             
         elif choice == '2':
-            setup_playit()
+            playit_proc = setup_playit()
+            if playit_proc:
+                processes.append(playit_proc)
 
         server_proc = start_terraria_server()
         processes.append(server_proc)
