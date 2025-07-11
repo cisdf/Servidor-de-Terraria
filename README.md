@@ -7,7 +7,7 @@
 
 ## 🔥 ¿Por qué usar esta solución?  
 ✅ **Configuración en 1 minuto** - Automatizado con Python  
-☁️ **Funciona en la nube** (Codespaces)
+☁️ **Funciona en la nube** (Codespaces)   
 🛡️ **Túneles seguros** con Ngrok o Playit  
 🤖 **Auto-backups** cada 5 minutos  
 📱 **Notificaciones en Discord** (opcional)  
