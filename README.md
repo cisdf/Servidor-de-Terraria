@@ -77,3 +77,5 @@ Ejecuta el script nuevamente y selecciona la opción cuando se te pregunte.
 
 ## 🐛 Reporte de Problemas  
 Abre un [issue en GitHub](https://github.com/cisdf/terraria-codespaces/issues) con los detalles de tu error.
+
+---
