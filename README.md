@@ -18,7 +18,7 @@
 ## 🛠️ Instalación Paso a Paso  
 
 ### 📥 Requisitos  
-- Cuenta GitHub con acceso a Codespaces (o sistema Linux para ejecución local)  
+- Cuenta GitHub con acceso a Codespaces   
 - Para Ngrok: Token de [Ngrok](https://ngrok.com/)  
 - Opcional: Webhook de Discord para notificaciones  
 
