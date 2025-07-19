@@ -16,7 +16,6 @@ from urllib.parse import urlparse
 
 from instalar_playit import install_playit, is_playit_installed, run_command_async
 
-# Configuración de logging
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
@@ -24,7 +23,6 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Configuración de rutas
 CONFIG_FILE = Path(__file__).parent / "terraria_config.json"
 SCRIPT_DIR = Path(__file__).parent.resolve()
 TERRARIA_FOLDER = SCRIPT_DIR / "terraria-server"
@@ -32,11 +30,9 @@ NGROK_FOLDER = SCRIPT_DIR / "ngrok"
 WORLDS_FOLDER = SCRIPT_DIR / "worlds"
 DEFAULT_TERRARIA_WORLDS = Path.home() / ".local" / "share" / "Terraria" / "Worlds"
 
-# URLs
 TERRARIA_URL = "https://terraria.org/api/download/mobile-dedicated-server/terraria-server-1449.zip"
 NGROK_DOWNLOAD_URL = "https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-stable-linux-amd64.zip"
 
-# Expresiones regulares para validación
 NGROK_TOKEN_REGEX = r"^[0-9a-zA-Z_]{32,}$"
 DISCORD_WEBHOOK_REGEX = r"^https://discord\.com/api/webhooks/\d+/[a-zA-Z0-9_-]+$"
 
@@ -47,7 +43,6 @@ class ServerError(Exception):
     pass
 
 def load_config() -> Dict[str, Any]:
-    """Carga y valida la configuración desde el archivo."""
     config = {
         'ngrok_token': None,
         'discord_webhook': None
@@ -60,7 +55,6 @@ def load_config() -> Dict[str, Any]:
                 config.update(saved_config)
                 logger.info("Configuración cargada desde archivo")
                 
-                # Validar configuración existente
                 if config['ngrok_token'] and not re.match(NGROK_TOKEN_REGEX, config['ngrok_token']):
                     raise ConfigError("Formato de token Ngrok inválido")
                     
@@ -77,7 +71,6 @@ def load_config() -> Dict[str, Any]:
     return config
 
 def save_config(config: Dict[str, Any]) -> None:
-    """Guarda la configuración validada en el archivo."""
     try:
         with open(CONFIG_FILE, 'w') as f:
             json.dump(config, f, indent=2)
@@ -88,7 +81,6 @@ def save_config(config: Dict[str, Any]) -> None:
         raise ServerError("No se pudo guardar la configuración")
 
 def setup_directories() -> None:
-    """Crea directorios necesarios con manejo de errores."""
     try:
         WORLDS_FOLDER.mkdir(exist_ok=True, parents=True)
         (TERRARIA_FOLDER / "logs").mkdir(parents=True, exist_ok=True)
@@ -99,9 +91,7 @@ def setup_directories() -> None:
         raise ServerError("Error en configuración de directorios")
 
 def create_symlink() -> None:
-    """Crea enlace simbólico para mundos con validación."""
     try:
-        # Asegurarse de que los directorios existen
         WORLDS_FOLDER.mkdir(exist_ok=True, parents=True)
         DEFAULT_TERRARIA_WORLDS.parent.mkdir(exist_ok=True, parents=True)
         
@@ -128,7 +118,6 @@ def create_symlink() -> None:
         raise ServerError("Error al crear enlace simbólico")
 
 def download_file(url: str, destination: Path, max_retries: int = 3) -> None:
-    """Descarga archivo con reintentos y manejo de errores."""
     for attempt in range(max_retries):
         try:
             response = requests.get(url, stream=True, timeout=15)
@@ -151,7 +140,6 @@ def download_file(url: str, destination: Path, max_retries: int = 3) -> None:
             raise ServerError(f"Fallo en la descarga de {destination.name}")
 
 def setup_terraria_server() -> None:
-    """Instala y configura el servidor de Terraria."""
     if (TERRARIA_FOLDER / "TerrariaServer").exists():
         logger.info("Servidor de Terraria ya instalado")
         return
@@ -163,7 +151,6 @@ def setup_terraria_server() -> None:
         with zipfile.ZipFile(zip_path) as zip_ref:
             zip_ref.extractall(TERRARIA_FOLDER)
             
-        # Buscar binario recursivamente
         binary_path = next(TERRARIA_FOLDER.rglob("TerrariaServer.bin.x86_64"), None)
         if not binary_path:
             raise FileNotFoundError("Binario del servidor no encontrado en el archivo ZIP")
@@ -180,7 +167,6 @@ def setup_terraria_server() -> None:
     create_server_config()
 
 def create_server_config() -> None:
-    """Crea el archivo de configuración del servidor con valores por defecto."""
     config_path = TERRARIA_FOLDER / "serverconfig.txt"
     default_config = """# Configuración generada automáticamente
 port=7777
@@ -192,7 +178,6 @@ motd=¡Bienvenido al servidor!
             f.write(default_config)
         logger.info(f"Archivo de configuración creado en: {config_path}")
         
-        # Configurar permisos seguros
         config_path.chmod(0o644)
         
     except IOError as e:
@@ -200,7 +185,6 @@ motd=¡Bienvenido al servidor!
         raise ServerError("No se pudo crear la configuración del servidor")
 
 def setup_ngrok(config: Dict[str, Any]) -> subprocess.Popen:
-    """Configura y ejecuta Ngrok con manejo mejorado."""
     ngrok_executable = NGROK_FOLDER / "ngrok"
     
     if not ngrok_executable.exists():
@@ -213,7 +197,6 @@ def setup_ngrok(config: Dict[str, Any]) -> subprocess.Popen:
         ngrok_executable.chmod(0o755)
         zip_path.unlink()
 
-    # Autenticación
     auth_result = subprocess.run(
         [str(ngrok_executable), "authtoken", config['ngrok_token']],
         capture_output=True,
@@ -224,7 +207,6 @@ def setup_ngrok(config: Dict[str, Any]) -> subprocess.Popen:
         logger.error(f"Error autenticando Ngrok: {auth_result.stderr}")
         raise ServerError("Fallo en autenticación de Ngrok")
 
-    # Ejecutar Ngrok
     ngrok_process = subprocess.Popen(
         [str(ngrok_executable), "tcp", "7777", "--log=stdout"],
         stdout=subprocess.PIPE,
@@ -232,10 +214,9 @@ def setup_ngrok(config: Dict[str, Any]) -> subprocess.Popen:
         text=True
     )
     
-    # Obtener URL del túnel
     tunnel_url = None
     start_time = time.time()
-    while time.time() - start_time < 30:  # Timeout de 30 segundos
+    while time.time() - start_time < 30:
         line = ngrok_process.stdout.readline()
         if "started tunnel" in line and "url=tcp://" in line:
             tunnel_url = line.split("url=tcp://")[1].strip()
@@ -251,7 +232,6 @@ def setup_ngrok(config: Dict[str, Any]) -> subprocess.Popen:
     return ngrok_process
 
 def setup_playit() -> subprocess.Popen:
-    """Configura Playit con verificación de estado."""
     if not is_playit_installed():
         logger.info("Instalando Playit...")
         try:
@@ -263,9 +243,8 @@ def setup_playit() -> subprocess.Popen:
     logger.info("Iniciando Playit...")
     try:
         process = run_command_async("playit")
-        time.sleep(2)  # Esperar inicialización
+        time.sleep(2)
         
-        # Verificar que Playit está corriendo
         if not any("playit" in p.name() for p in psutil.process_iter(['name'])):
             raise ServerError("Playit no se inició correctamente")
             
@@ -279,14 +258,12 @@ def setup_playit() -> subprocess.Popen:
         raise
 
 def send_to_discord(webhook: Optional[str], full_address: str) -> None:
-    """Envía mensaje a Discord de forma asíncrona."""
     if not webhook:
         logger.info("Webhook de Discord no configurado")
         return
 
     def async_send():
         try:
-            # Validar dirección
             if ':' not in full_address:
                 raise ValueError("Formato de dirección inválido")
                 
@@ -318,7 +295,6 @@ def send_to_discord(webhook: Optional[str], full_address: str) -> None:
     Thread(target=async_send, daemon=True).start()
 
 def server_monitor() -> None:
-    """Monitorea y gestiona el servidor."""
     while True:
         time.sleep(300)
         try:
@@ -358,7 +334,6 @@ def start_terraria_server() -> subprocess.Popen:
         raise ServerError("Error en el servidor")
 
 def graceful_shutdown(processes: list) -> None:
-    """Apagado controlado de procesos."""
     logger.info("Deteniendo procesos...")
     for p in processes:
         try:
@@ -371,7 +346,6 @@ def graceful_shutdown(processes: list) -> None:
             logger.error(f"Error deteniendo proceso {p}: {e}")
 
 def main() -> None:
-    """Función principal con manejo mejorado de errores."""
     processes = []
     try:
         config = load_config()
@@ -381,7 +355,6 @@ def main() -> None:
         
         Thread(target=server_monitor, daemon=True).start()
 
-        # Selección de túnel
         while True:
             choice = input("Seleccione túnel [1] Ngrok [2] Playit: ").strip()
             if choice in ('1', '2'):
