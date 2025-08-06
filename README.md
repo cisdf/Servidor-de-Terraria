@@ -1,7 +1,7 @@
 # 🚀 Servidor de Terraria en GitHub Codespaces  
 **Configura un servidor de Terraria con un solo clic - ¡Sin complicaciones!**  
 
-> ✨ **Proyecto mantenido por [Bryan GR](https://github.com/cisdf) |
+> ✨ Proyecto mantenido por [Bryan GR](https://github.com/cisdf) |
 
 ---
 
