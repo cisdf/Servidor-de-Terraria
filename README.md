@@ -1,7 +1,7 @@
 # 🚀 Servidor de Terraria en GitHub Codespaces  
 **Configura un servidor de Terraria con un solo clic - ¡Sin complicaciones!**  
 
-> ✨ **Proyecto mantenido por [Bryan GR](https://github.com/cisdf) | [☕ Invítame un café](https://ko-fi.com/brayangr)**  
+> ✨ **Proyecto mantenido por [Bryan GR](https://github.com/cisdf) |
 
 ---
 
@@ -67,8 +67,6 @@ En el directorio `worlds/` del proyecto, con backups automáticos.
 
 ### ¿Es gratis?  
 ✅ **Totalmente gratis** - Los servicios de tunneling pueden tener límites gratuitos.  
-Si te gusta el proyecto:  
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/brayangr)  
 
 ### ¿Cómo configuro Discord?  
 Ejecuta el script nuevamente y selecciona la opción cuando se te pregunte.  
