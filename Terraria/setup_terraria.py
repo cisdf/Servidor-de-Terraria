@@ -30,7 +30,7 @@ NGROK_FOLDER = SCRIPT_DIR / "ngrok"
 WORLDS_FOLDER = SCRIPT_DIR / "worlds"
 DEFAULT_TERRARIA_WORLDS = Path.home() / ".local" / "share" / "Terraria" / "Worlds"
 
-TERRARIA_URL = "https://terraria.org/api/download/mobile-dedicated-server/terraria-server-1452.zip"
+TERRARIA_URL = "https://terraria.org/api/download/pc-dedicated-server/terraria-server-1455.zip"
 NGROK_DOWNLOAD_URL = "https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-stable-linux-amd64.zip"
 
 NGROK_TOKEN_REGEX = r"^[0-9a-zA-Z_]{32,}$"
